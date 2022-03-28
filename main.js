@@ -9,10 +9,10 @@
 
 // Calculator
 function Calculator(){
-    this.currentValue = 0,      // store the current running total value
-    this.inProgressValue = '',  // store the value of the numbers currently being entered
-    this.displayValue = '',     // store the value to display on screen
-    this.lastOperator = '',     // store the last operator button pressed
+    let currentValue = 0      // store the current running total value
+    let inProgressValue = ''  // store the value of the numbers currently being entered
+    let displayValue = ''     // store the value to display on screen
+    let lastOperator = ''     // store the last operator button pressed
     // this.display = document.querySelector(".results").innerHTML
 
     // ==========
@@ -22,20 +22,20 @@ function Calculator(){
     // When a number button is pressed
     this.numbers = function(value){
         // if the a button is pressed right after = is pressed, clear all
-        if(this.lastOperator == "="){
+        if(lastOperator == "="){
             this.clearAll()
         }
 
         // prevent multiple zeros from being entered when no other value is entered
-        if(!(value == "0" && this.inProgressValue == 0)){
+        if(!(value == "0" && inProgressValue == 0)){
             
             // prevent multiple decimal points
-            if(!(this.inProgressValue.includes(".") && value == ".")){
+            if(!(inProgressValue.includes(".") && value == ".")){
 
-                // Update current "inProgressValue" and the display to
-                this.inProgressValue += value
-                this.displayValue = this.inProgressValue
-                document.querySelector(".results").innerHTML = this.displayValue
+                // Update current "inProgressValue" and the display
+                inProgressValue += value
+                displayValue = inProgressValue
+                document.querySelector(".results").innerHTML = displayValue
             }
         } 
     },
@@ -43,53 +43,53 @@ function Calculator(){
     // When an operator button is pressed
     this.operations = function(operator){
         // check if this is the first operation
-        if(this.lastOperator === ''){
+        if(lastOperator === ''){
             // set current value to value entered and store operator for next calculation.
             // display the results
-            this.currentValue = +this.inProgressValue
-            this.inProgressValue = ''
-            this.lastOperator = operator
-            this.displayValue = this.currentValue
-            document.querySelector(".results").innerHTML = this.displayValue
+            currentValue = +inProgressValue
+            inProgressValue = ''
+            lastOperator = operator
+            displayValue = currentValue
+            document.querySelector(".results").innerHTML = displayValue
             // console.log(`operator: ${operator}\ncurrentValue: ${this.currentValue}\ninProgressValue: ${this.inProgressValue}\nlastOperator: ${this.lastOperator}\ndisplayValue: ${this.displayValue}`)
         } else{
             // Handle each operator function
-            switch(this.lastOperator){
+            switch(lastOperator){
                 case "+":
-                    this.currentValue += +this.inProgressValue
+                    currentValue += +inProgressValue
                     break
                 case "-":
-                    this.currentValue -= +this.inProgressValue
+                    currentValue -= +inProgressValue
                     break
                 case "X":
-                    this.currentValue *= +this.inProgressValue
+                    currentValue *= +inProgressValue
                     break
                 case "/":
-                    this.currentValue /= +this.inProgressValue
+                    currentValue /= +inProgressValue
                     break
                 case "=":
                     // prevent clearing the screen when "=" is entered repeatedly
-                    if(!(this.currentValue == 0 && this.lastOperator == '') && !(this.lastOperator == '=')){
-                        this.currentValue += +this.inProgressValue
-                        console.log(this.currentValue, this.inProgressValue)
+                    if(!(currentValue == 0 && lastOperator == '') && !(lastOperator == '=')){
+                        currentValue += +inProgressValue
+                        console.log(currentValue, inProgressValue)
                     }
                     break
             }
             // reset properies accordingly and display results
-            this.inProgressValue = ''
-            this.lastOperator = operator
-            this.displayValue = this.currentValue
-            document.querySelector(".results").innerHTML = this.displayValue
+            inProgressValue = ''
+            lastOperator = operator
+            displayValue = currentValue
+            document.querySelector(".results").innerHTML = displayValue
         }
     },
 
     // When the clear button is pressed
     this.clearAll = function(){
         // Reset all properties to base value
-        this.currentValue = 0
-        this.inProgressValue = ''
-        this.displayValue = ''
-        this.lastOperator = ''
+        currentValue = 0
+        inProgressValue = ''
+        displayValue = ''
+        lastOperator = ''
         document.querySelector(".results").innerHTML = 0
     }
 }
